@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="embeddedDatabaseJdbcBatchItemWriter" class="fr.youtix.writer.EmbeddedDatabseJdbcBatchItemWriter"
+		scope="step">
+		<property name="dataSource" ref="datasource" />
+		<property name="sql">
+			<value>
+            <![CDATA[
+                 insert into records(id)
+                 values (:id)
+             ]]>
+			</value>
+		</property>
+		<property name="itemSqlParameterSourceProvider">
+			<bean
+				class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+		</property>
+	</bean>
+
+
+</beans>
